@@ -92,7 +92,7 @@ function updatePipes() {
             if (soundEnabled) scoreSound.play();
 
             // Check if score is 5 to show the treasure chest
-            if (score === 10) {
+            if (score === 5) {
                 showTreasureChest();
             }
         }
