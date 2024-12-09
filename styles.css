@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+:root {
+    --primary-color: #6411B5;
+    --secondary-color: #1E0F3C;
+    --accent-color: #9747FF;
+    --text-color: #FFFFFF;
+    --bg-gradient: linear-gradient(135deg, #1E0F3C, #6411B5, #9747FF);
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-gradient);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+#gameContainer {
+    position: relative;
+    width: 90vw;
+    max-width: 500px;
+    height: 80vh;
+    max-height: 900px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #1E0F3C 0%, #6411B5 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(100, 17, 181, 0.4);
+    border: 6px solid rgba(151, 71, 255, 0.4);
+}
+
+#bird {
+    position: absolute;
+    width: 15%;
+    max-width: 150px;
+    height: auto;
+    aspect-ratio: 1/1;
+    background: url('assets/image/start.png') no-repeat center center;
+    background-size: contain;
+    transition: transform 0.1s;
+    filter: drop-shadow(0 4px 8px rgba(255,182,193,0.3));
+}
+
+.pipe {
+    position: absolute;
+    width: 12%;
+    max-width: 120px;
+    background: linear-gradient(90deg, #6411B5, #9747FF);
+    border-radius: 15px;
+    border: 4px solid #9747FF;
+    box-shadow: inset -4px 0 8px rgba(255, 255, 255, 0.2);
+}
+
+#score {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 800;
+    color: var(--text-color);
+    text-shadow: 3px 3px 0 var(--secondary-color),
+                 6px 6px 0 rgba(100, 17, 181, 0.3);
+    z-index: 10;
+}
+
+#gameOver, #startScreen {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--text-color);
+    background: rgba(30, 15, 60, 0.95);
+    padding: 5%;
+    border-radius: 30px;
+    z-index: 20;
+    width: 80%;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(151, 71, 255, 0.5);
+    animation: fadeIn 0.3s ease-out;
+}
+
+#startScreen {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -40%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+#resetBtn, #startBtn {
+    margin-top: 20px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: clamp(14px, 2.5vw, 20px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(151, 71, 255, 0.5);
+}
+
+#resetBtn:hover, #startBtn:hover {
+    background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(151, 71, 255, 0.6);
+}
+
+#soundToggle {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    background: rgba(151, 71, 255, 0.4);
+    border: 3px solid rgba(100, 17, 181, 0.5);
+    border-radius: 50%;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: clamp(24px, 5vw, 48px);
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+#soundToggle:hover {
+    background: rgba(255,255,255,0.6);
+    transform: scale(1.1) rotate(10deg);
+}
+
+#backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(151, 71, 255, 0.4);
+    border: 3px solid rgba(100, 17, 181, 0.5);
+    border-radius: 50px;
+    color: var(--text-color);
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    z-index: 100;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#backButton:hover {
+    background: rgba(255,255,255,0.6);
+    transform: translateX(-5px) scale(1.05);
+}
+
+#backButton::before {
+    content: '←';
+    font-size: 20px;
+}
+
+.clouds {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(151, 71, 255, 0.2);
+    border-radius: 50px;
+    animation: floatCloud linear infinite;
+    filter: drop-shadow(0 4px 6px rgba(100, 17, 181, 0.2));
+}
+
+@keyframes floatCloud {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+#birdImageInput {
+    display: block;
+    margin: 15px auto;
+    padding: 10px;
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    background: rgba(30, 15, 60, 0.8);
+    color: var(--text-color);
+    width: 80%;
+    max-width: 300px;
+}
+
+#birdImageInput::file-selector-button {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    border: none;
+    border-radius: 20px;
+    color: var(--text-color);
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+}
+
+@keyframes revealTrophy {
+    from { transform: translateX(-50%) scale(0); opacity: 0; }
+    to { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+#trophy {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    animation: revealTrophy 1s ease-out forwards;
+}
+
+@keyframes combine {
+    0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); }
+    100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #ff85a2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#finalImage {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: transparent;
+}
+
+#combineText {
+    text-shadow: 3px 3px 0 #ffffff,
+                 6px 6px 0 rgba(255,182,193,0.3);
+    animation: popIn 0.5s ease-out forwards;
+}
+
+@keyframes popIn {
+    0% { transform: translateX(-50%) scale(0); }
+    50% { transform: translateX(-50%) scale(1.2); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+#revealedImage {
+    width: 50%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50% { transform: translate(-50%, -50%) translateY(-5px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #gameContainer {
+        width: 95vw;
+        height: 85vh;
+    }
+
+    #bird {
+        width: 20%;
+    }
+
+    .pipe {
+        width: 15%;
+    }
+
+    #startScreen, #gameOver {
+        width: 90%;
+        padding: 20px;
+    }
+
+    #soundToggle {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    #backButton {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
