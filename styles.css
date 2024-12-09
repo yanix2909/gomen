@@ -46,7 +46,7 @@ body {
     max-width: 150px;
     height: auto;
     aspect-ratio: 1/1;
-    background: url('assets/image/start.png') no-repeat center center;
+    background: url('start.png') no-repeat center center;
     background-size: contain;
     transition: transform 0.1s;
     filter: drop-shadow(0 4px 8px rgba(255,182,193,0.3));
